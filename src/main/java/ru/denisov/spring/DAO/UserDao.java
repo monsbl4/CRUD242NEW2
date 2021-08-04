@@ -9,6 +9,8 @@ import ru.denisov.spring.models.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 @Repository
 public class UserDao implements UserDaoInt{
@@ -26,28 +28,31 @@ public class UserDao implements UserDaoInt{
         return entityManager.createNativeQuery("SELECT * FROM users",
                 User.class).getResultList();
     }
-
+    @Transactional
     public User show (int id) {
 //        return jdbcTemplate.query("Select * from users where id=?", new Object[]{id},new BeanPropertyRowMapper<>(User.class))
 //                .stream().findAny().orElse(null);
-    return null;
+        TypedQuery<User> user = entityManager.createQuery(
+                "select user from User user WHERE user.id=:id", User.class
+        );
+        return user.setParameter("id", id).getResultList().stream().findAny().orElse(null);
     }
-
+    @Transactional
     public void save(User user) {
-
-//        jdbcTemplate.update("INSERT INTO USERS VALUES(?,?,?,?,?)", user.getId(), user.getName(), user.getLastName(), user.getEmail(), user.getAge());
         entityManager.persist(user);
+//        jdbcTemplate.update("INSERT INTO USERS VALUES(?,?,?,?,?)", user.getId(), user.getName(), user.getLastName(), user.getEmail(), user.getAge());
     }
-
+    @Transactional
     public void update(int id, User updatedUser) {
 //        jdbcTemplate.update("UPDATE users set name=?,last_name=?,email=?,age=? where id=?", updatedUser.getName(),
 //                updatedUser.getLastName(),updatedUser.getEmail(),updatedUser.getAge(), id);
-
         entityManager.merge(updatedUser);
+
     }
+    @Transactional
     public void delete(int id) {
 //        jdbcTemplate.update("Delete from users where id=?",id);
-    entityManager.remove(show(id));
+            entityManager.remove(show(id));
     }
 
 }
