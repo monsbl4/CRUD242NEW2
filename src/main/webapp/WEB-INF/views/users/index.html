@@ -1,15 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<div th:each="user: ${users}">
-    <a th:href="@{/users/{id}(id=${user.getId()})}"
-       th:text="${user.getId() + ' ' + user.getName() + ' ' + user.getLastName() + ' ' + user.getEmail()} ">user</a>
-</div>
+<!--<div th:each="user: ${users}">-->
+<!--    <a th:href="@{/users/{id}(id=${user.getId()})}"-->
+<!--       th:text="${user.getId() + ' ' + user.getName() + ' ' + user.getLastName() + ' ' + user.getEmail()} ">user</a>-->
+<!--</div>-->
+<h1>Список пользователей</h1>
 
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Возраст</th>
+        <th>почта</th>
+        <th>действие</th>
+    </tr>
+    <div th:each="user: ${users}">
+    <tr>
+        <td th:text ="${user.getId()}"/></td>
+        <td th:text="${user.getName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
+        <td th:text="${user.getAge()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td><a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
+            <a th:href="@{/users/{id}(id=${user.getId()})}">Show</a>
+            <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete"/>
+            </form></td>
+    </tr>
+    </div>
+</table>
 <br/>
 <hr/>
 <a href="/users/new">Create new user</a>

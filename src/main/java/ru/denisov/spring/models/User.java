@@ -5,6 +5,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -31,12 +33,25 @@ public class User {
     @Min(value = 0, message = "возраст должен быть больше 0")
     private int age;
 
-    public User(int id, String name, String lastName, String email, int age) {
-        this.id = id;
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public User(String name, String lastName, String email, int age, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.age = age;
+        this.roles = roles;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getLastName() {

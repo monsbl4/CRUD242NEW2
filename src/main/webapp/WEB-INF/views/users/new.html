@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://thymeleaf.org ">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New user</title>
+    <title>Add user</title>
 </head>
 <body>
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
@@ -13,7 +12,7 @@
     <br/>
     <label for="lastname">Enter lastname</label>
     <input type="text" th:field="*{lastName}" id="lastname"/>
-    <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastname}">Name error</div>
+    <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name error</div>
     <br/>
     <label for="age">Enter age</label>
     <input type="text" th:field="*{age}" id="age">
@@ -23,8 +22,16 @@
     <input type="text" th:field="*{email}" id="email">
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</div>
     <br/>
+    <label>Role:
+        <select multiple size="2" name="select_role" class="form-control">
+            <option th:each="role : ${role}" th:value="${role.getRole()}"
+                    th:text="${role.getRole() == 'ROLE_ADMIN'} ? 'ROLE_ADMIN' : 'ROLE_USER'"></option>
+        </select>
+        <br/>
+    </label>
     <input type="submit" value="Create!"/>
 </form>
+
 
 </body>
 </html>
