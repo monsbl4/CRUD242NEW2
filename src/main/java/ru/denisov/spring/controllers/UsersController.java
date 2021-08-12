@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.denisov.spring.Services.RoleService;
-import ru.denisov.spring.Services.RoleServiceImpl;
 import ru.denisov.spring.Services.UserServiceImp;
 import ru.denisov.spring.models.Role;
 import ru.denisov.spring.models.User;
@@ -40,10 +39,6 @@ public class UsersController {
         model.addAttribute("user",userServiceImp.show(id));
         return "users/show";
     }
-//    @GetMapping("/new")
-//    public String newUser(@ModelAttribute("user") User user) {
-//        return "users/new";
-//    }
 
     @GetMapping("/new")
     public String createUser(Model model){
@@ -67,16 +62,6 @@ public class UsersController {
         return "redirect:/users";
     }
 
-//    @PostMapping
-//    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-//        //@Valid - проверяет на правильность заполнения, указанных в Users
-//        //bindingResult - ошибки, идет после User всегда
-//        if (bindingResult.hasErrors()){
-//            return "users/new";
-//        }
-//        userServiceImp.save(user);
-//        return "redirect:/users";
-//    }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){

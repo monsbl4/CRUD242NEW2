@@ -27,8 +27,15 @@
         <td th:text="${user.getLastName()}"></td>
         <td th:text="${user.getAge()}"></td>
         <td th:text="${user.getEmail()}"></td>
-        <td><a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
-            <a th:href="@{/users/{id}(id=${user.getId()})}">Show</a>
+        <td>
+<!--            <a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>-->
+<!--            <a th:href="@{/users/{id}(id=${user.getId()})}">Show</a>-->
+            <form th:method="GET" th:action="@{/users/{id}(id=${user.getId()})}">
+                <input type="submit" value="Show"/>
+            </form>
+            <form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
+                <input type="submit" value="Edit"/>
+            </form>
             <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
                 <input type="submit" value="Delete"/>
             </form></td>
@@ -37,7 +44,7 @@
 </table>
 <br/>
 <hr/>
-<a href="/users/new">Create new user</a>
+<a href="/users/new">Создать пользователя</a>
 
 
 </body>
