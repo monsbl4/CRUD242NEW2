@@ -1,5 +1,6 @@
 package ru.denisov.spring.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,7 @@ public class UsersController {
     }
 
     @GetMapping("/new")
+    @Secured("ROLE_ADMIN")
     public String createUser(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("role", roleService.getRoles());
@@ -48,6 +50,7 @@ public class UsersController {
     }
 
     @PostMapping()
+    @Secured("ROLE_ADMIN")
     public String addUser(@ModelAttribute("user") User user,  @RequestParam(value = "select_role", required = false) String[] roles) {
 
         Set<Role> role = new HashSet<>();

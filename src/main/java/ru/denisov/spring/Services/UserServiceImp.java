@@ -1,7 +1,10 @@
 package ru.denisov.spring.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.denisov.spring.DAO.RoleDao;
 import ru.denisov.spring.DAO.UserDao;
 import ru.denisov.spring.models.User;
 
@@ -11,6 +14,9 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
     @Override
     public List<User> index() {
@@ -38,7 +44,17 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User getUserByName(String name) {
-        return null;
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.getUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("User '%username' not found!", username));
+        }
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), user.getAuthorities());
+        return userDetails;
     }
 }
