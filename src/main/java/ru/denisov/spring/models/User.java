@@ -19,17 +19,17 @@ public class User implements UserDetails {
     private int id;
 
     @Column(name = "name", length = 30)
-    @NotEmpty(message = "Имя не может быть пустым")
+    @NotEmpty(message = "Введите имя")
     @Size(min = 2,max = 30, message = "Имя должно содержать от 2 до 30 символов")
     private String name;
 
     @Column (name = "last_name", length = 60)
-    @NotEmpty(message = "Фамилия не может быть пустым")
+    @NotEmpty(message = "Введите фамилию")
     @Size(min = 2,max = 60, message = "Фамилия должна содержать от 2 до 60 символов")
     private String lastName;
 
     @Column(name = "email", length = 60)
-    @NotEmpty(message = "Email не может быть пустым")
+    @NotEmpty(message = "Введите email")
     @Email(message = "Неправильный формат")
     private String email;
 
@@ -37,15 +37,18 @@ public class User implements UserDetails {
     @Min(value = 0, message = "возраст должен быть больше 0")
     private int age;
 
+
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     @Column(name = "username")
+    @NotEmpty(message = "Введите логин")
     private String username;
 
     @Column(name = "password")
+    @NotEmpty(message = "Введите пароль")
     private String password;
 
     public User(String name, String lastName, String email, int age, Set<Role> roles, String username, String password) {
