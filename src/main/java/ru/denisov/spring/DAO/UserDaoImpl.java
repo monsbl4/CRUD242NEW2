@@ -16,24 +16,21 @@ public class UserDaoImpl implements UserDao {
 
     public List<User> index() {
 
-        return entityManager.createNativeQuery("SELECT * FROM users",
-                User.class).getResultList();
+        return entityManager.createQuery("from User",User.class).getResultList();
     }
     @Transactional
     public User show (int id) {
-
-        TypedQuery<User> user = entityManager.createQuery(
-                "select user from User user WHERE user.id=:id", User.class
-        );
-        return user.setParameter("id", id).getResultList().stream().findAny().orElse(null);
+        return entityManager.find(User.class,id);
     }
     @Transactional
     public void save(User user) {
         entityManager.persist(user);
+        entityManager.flush();
     }
     @Transactional
     public void update(int id, User updatedUser) { ;
         entityManager.merge(updatedUser);
+        entityManager.flush();
 
     }
     @Transactional

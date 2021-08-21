@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -7,8 +7,10 @@
 <body>
 <div>
     <form method="post" action="/login">
-        <input name="j_username"/>
-        <input name="j_password"/>
+        Введите логин: <input name="j_username"/>
+        </br>
+        Введите пароль: <input name="j_password"/>
+        <br/>
         <input type="submit"/>
     </form>
 </div>

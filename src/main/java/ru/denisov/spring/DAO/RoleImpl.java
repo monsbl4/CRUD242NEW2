@@ -11,6 +11,7 @@ public class RoleImpl implements RoleDao{
     @PersistenceContext
     EntityManager em;
 
+
     @Override
     public List<Role> getRoles() {
 

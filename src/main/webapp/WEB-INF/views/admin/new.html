@@ -41,6 +41,7 @@
             <option th:each="roles : ${role}" th:value="${roles.getRole()}"
                     th:text="${roles.getRole() == 'ROLE_ADMIN'} ? 'ROLE_ADMIN' : 'ROLE_USER'"></option>
         </select>
+
         <br/>
     </label>
     <input type="submit" value="Create!"/>

@@ -39,6 +39,7 @@ public class User implements UserDetails {
 
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @NotEmpty(message = "выберите роль")
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
